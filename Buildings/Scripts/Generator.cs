@@ -1,3 +1,4 @@
+using Beltv1C.Buildings.Enums;
 using Beltv1C.Items.Constants;
 using Beltv1C.Items.Enums;
 using Beltv1C.Items.Scripts;
@@ -9,11 +10,12 @@ namespace Beltv1C.Buildings.Scripts;
 public partial class Generator : BaseBuilding
 {
     private Timer timer;
-	private ItemType itemType;
 
     public override void _Ready()
     {
 		itemType = ItemType.Wood;
+        directionFrom = Direction.Right;
+        directionTo = Direction.None;
 
         // Get the references to the nodes in the scene
         item = GetNode<Node2D>("Item");
@@ -42,11 +44,6 @@ public partial class Generator : BaseBuilding
 	public override void _Process(double delta)
 	{
 	}
-
-    public override void RotateBuilding(bool needsCorner)
-    {
-        throw new NotImplementedException();
-    }
 
     public override Vector2I Create(TileMapLayer receivedTilemap, Vector2 mousePosition)
     {

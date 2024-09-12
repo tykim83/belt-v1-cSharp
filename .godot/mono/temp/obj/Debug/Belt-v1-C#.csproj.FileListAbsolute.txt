@@ -32,3 +32,4 @@ D:\godot\belt-v1-cSharp\.godot\mono\temp\obj\Debug\refint\Belt-v1-C#.dll
 D:\godot\belt-v1-cSharp\.godot\mono\temp\obj\Debug\Belt-v1-C#.pdb
 D:\godot\belt-v1-cSharp\.godot\mono\temp\obj\Debug\Belt-v1-C#.genruntimeconfig.cache
 D:\godot\belt-v1-cSharp\.godot\mono\temp\obj\Debug\ref\Belt-v1-C#.dll
+D:\godot\belt-v1-cSharp\.godot\mono\temp\obj\Debug\Belt-v1-C#.sourcelink.json

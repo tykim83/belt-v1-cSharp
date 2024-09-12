@@ -1,0 +1,7 @@
+res://Buildings/Scripts/BaseBuilding.cs
+res://UI/Scripts/GenericBuildingPanel.cs
+res://Buildings/Scripts/Generator.cs
+res://Items/Scripts/BaseItem.cs
+res://Buildings/Scripts/BuildingManager.cs
+res://Main.cs
+res://Buildings/Scenes/generator.tscn

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using Beltv1C.Buildings.Constants;
 using Beltv1C.Buildings.Enums;
 using Godot;
 
@@ -10,7 +10,7 @@ public partial class BuildingManager : Node2D
 
 	private bool isPlacing = false;
     private BuildingType currentBuildingType;
-    private Node2D currentBuilding;
+    private BaseBuilding currentBuilding;
     private Node tempBuildings;
 	private TileMapLayer tileMapLayer;
 
@@ -18,10 +18,13 @@ public partial class BuildingManager : Node2D
 	[Signal]
 	public delegate void BuildingTypeSignalEventHandler(int buildingType);
 
-	private Dictionary<BuildingType, PackedScene> buildingScenePaths = new()
+	public override void _Input(InputEvent @event)
     {
-        { BuildingType.Generator, GD.Load<PackedScene>("res://Buildings/Scenes/generator.tscn") },
-    };
+        if (Input.IsActionJustPressed("rotate"))
+        {
+			currentBuilding.RotateBuilding(false);
+        }
+    }
 
 	public override void _Ready()
 	{
@@ -43,7 +46,7 @@ public partial class BuildingManager : Node2D
         currentBuildingType = (BuildingType)buildingType;
         
         // Instantiate the building
-        currentBuilding = (Node2D)buildingScenePaths[currentBuildingType].Instantiate();
+        currentBuilding = (BaseBuilding)BuildingConstants.BuildingScenePaths[currentBuildingType].Instantiate();
         
         // Add the building to the tempBuildings node
         tempBuildings.AddChild(currentBuilding);

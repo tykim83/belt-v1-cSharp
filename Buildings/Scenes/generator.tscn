@@ -11,6 +11,7 @@ script = ExtResource("1_7iytq")
 texture = ExtResource("1_o4svm")
 
 [node name="BuildingArrow" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("2_axlcd")
 
 [node name="Timer" type="Timer" parent="."]
