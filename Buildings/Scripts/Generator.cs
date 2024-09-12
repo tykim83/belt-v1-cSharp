@@ -23,7 +23,6 @@ public partial class Generator : BaseBuilding
         buildingArrow = GetNode<Sprite2D>("BuildingArrow");
 		timer = GetNode<Timer>("Timer");
 
-		timer.Start();
 		timer.Timeout += OnTimerTimeout;
 
         // Optional: Add error checking to make sure nodes were found
@@ -45,9 +44,9 @@ public partial class Generator : BaseBuilding
 	{
 	}
 
-    public override Vector2I Create(TileMapLayer receivedTilemap, Vector2 mousePosition)
+    public override void Create()
     {
-        throw new NotImplementedException();
+        timer.Start();
     }
 
     public override void SetNext(Node2D receivedNext)

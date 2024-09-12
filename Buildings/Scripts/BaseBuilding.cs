@@ -25,7 +25,7 @@ public abstract partial class BaseBuilding : Node2D
         directionTo = directionTo.RotateClockwise();
     }
 
-    public abstract Vector2I Create(TileMapLayer receivedTilemap, Vector2 mousePosition);
+    public virtual void Create() {}
     public abstract void SetNext(Node2D receivedNext);
     public abstract void MoveBoxToNext(float delta);
 }
