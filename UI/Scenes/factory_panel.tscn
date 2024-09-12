@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch3o6ydpgvqte"]
+
+[ext_resource type="Script" path="res://UI/Scripts/GenericBuildingPanel.cs" id="1_fsvgd"]
+[ext_resource type="Texture2D" uid="uid://dklkevaci5ps" path="res://Art/factory.png" id="2_a6i41"]
+
+[node name="FactoryPanel" type="Panel"]
+custom_minimum_size = Vector2(64, 64)
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+script = ExtResource("1_fsvgd")
+buildingType = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+texture = ExtResource("2_a6i41")

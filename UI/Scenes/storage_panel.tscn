@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvuucy1bp7pua"]
+
+[ext_resource type="Script" path="res://UI/Scripts/GenericBuildingPanel.cs" id="1_xmn7v"]
+[ext_resource type="Texture2D" uid="uid://57kvnlo5p76s" path="res://Art/storage.png" id="2_oq2xg"]
+
+[node name="StoragePanel" type="Panel"]
+custom_minimum_size = Vector2(64, 64)
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+script = ExtResource("1_xmn7v")
+buildingType = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+texture = ExtResource("2_oq2xg")

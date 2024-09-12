@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://df8kt4nw6bmgd"]
+
+[ext_resource type="Script" path="res://UI/Scripts/GenericBuildingPanel.cs" id="1_tnu5d"]
+[ext_resource type="Texture2D" uid="uid://dly4jdlo8spk" path="res://Art/Conveyors/conveyors_Left_Right.png" id="2_2utqf"]
+
+[node name="BeltPanel" type="Panel"]
+custom_minimum_size = Vector2(64, 64)
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+script = ExtResource("1_tnu5d")
+buildingType = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+texture = ExtResource("2_2utqf")

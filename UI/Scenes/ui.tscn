@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://cin3y4y7f57hf"]
+
+[ext_resource type="PackedScene" uid="uid://brlaha460oytn" path="res://UI/Scenes/generator_panel.tscn" id="1_n0gs6"]
+[ext_resource type="PackedScene" uid="uid://df8kt4nw6bmgd" path="res://UI/Scenes/belt_panel.tscn" id="1_oiaml"]
+[ext_resource type="PackedScene" uid="uid://ch3o6ydpgvqte" path="res://UI/Scenes/factory_panel.tscn" id="2_fow6l"]
+[ext_resource type="PackedScene" uid="uid://bvuucy1bp7pua" path="res://UI/Scenes/storage_panel.tscn" id="4_1o5i0"]
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="Panel" type="Panel" parent="."]
+offset_top = 640.0
+offset_right = 1280.0
+offset_bottom = 720.0
+size_flags_horizontal = 0
+
+[node name="VFlowContainer" type="VFlowContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 10
+alignment = 1
+
+[node name="BeltPanel" parent="Panel/VFlowContainer" instance=ExtResource("1_oiaml")]
+layout_mode = 2
+
+[node name="GeneratorPanel" parent="Panel/VFlowContainer" instance=ExtResource("1_n0gs6")]
+layout_mode = 2
+
+[node name="FactoryPanel" parent="Panel/VFlowContainer" instance=ExtResource("2_fow6l")]
+layout_mode = 2
+
+[node name="StoragePanel" parent="Panel/VFlowContainer" instance=ExtResource("4_1o5i0")]
+layout_mode = 2

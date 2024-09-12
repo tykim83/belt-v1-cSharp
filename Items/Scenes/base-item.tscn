@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbvhh3kg123s2"]
+
+[ext_resource type="Script" path="res://Items/Scripts/BaseItem.cs" id="1_0ix3s"]
+
+[node name="BaseItem" type="Node2D"]
+script = ExtResource("1_0ix3s")
+
+[node name="ItemSprite" type="Sprite2D" parent="."]

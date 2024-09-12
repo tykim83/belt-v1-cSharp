@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "s/IeppcnetEVDnh+EG+ppBwg7+hhI991XB8O7UCFrFbIgITJBBxbhTd+NOtA6125oJagvv7x6wCaPPSo8Dhofg==",
+  "success": true,
+  "projectFilePath": "D:\\godot\\belt-v1-cSharp\\Belt-v1-C#.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Fabrizio\\.nuget\\packages\\godot.sourcegenerators\\4.3.0\\godot.sourcegenerators.4.3.0.nupkg.sha512",
+    "C:\\Users\\Fabrizio\\.nuget\\packages\\godotsharp\\4.3.0\\godotsharp.4.3.0.nupkg.sha512",
+    "C:\\Users\\Fabrizio\\.nuget\\packages\\godotsharpeditor\\4.3.0\\godotsharpeditor.4.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}
