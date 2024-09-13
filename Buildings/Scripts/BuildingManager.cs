@@ -70,16 +70,8 @@ public partial class BuildingManager : Node2D
 				{
 					var buildingTo = adjacentBuildings[currentBuilding.DirectionTo];
 
-					// Don't connect if the belt is coming to your direction
-					if (buildingTo.BuildingType == BuildingType.Belt && currentBuilding.DirectionTo == buildingTo.DirectionTo.GetOppositeDirection())
-						return;
-
-					// Don't connect if building doesn't accept from any direction
-					if (buildingTo.DirectionFrom == Direction.None)
-						return;
-
-					// Set the next building in line
-					currentBuilding.SetNext(adjacentBuildings[currentBuilding.DirectionTo]);
+					if (buildingTo.DirectionFrom == currentBuilding.DirectionTo.GetOppositeDirection() || buildingTo.DirectionFrom == Direction.All)
+						currentBuilding.SetNext(adjacentBuildings[currentBuilding.DirectionTo]);
 				}
 				break;
 
@@ -97,7 +89,7 @@ public partial class BuildingManager : Node2D
 					}
 				}
 				break;
-				
+
 			case BuildingType.Belt:
 				foreach (var direction in directions)
 				{
