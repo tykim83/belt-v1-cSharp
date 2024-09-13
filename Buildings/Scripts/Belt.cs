@@ -1,3 +1,4 @@
+using Beltv1C.Buildings.Constants;
 using Beltv1C.Buildings.Enums;
 using Beltv1C.Items.Enums;
 using Godot;
@@ -37,7 +38,25 @@ public partial class Belt : BaseBuilding
 
 	public override void RotateBuilding(bool needsCorner) 
     {
-        buildingSprite.RotationDegrees += 90;
-        directionTo = directionTo.RotateClockwise();
+        if (needsCorner)
+		{
+			directionTo = directionFrom == directionTo.GetOppositeDirection() 
+			? directionTo.RotateClockwise() 
+			: directionTo.GetOppositeDirection();
+        }
+		else
+		{
+			directionFrom = directionFrom.RotateClockwise();
+			directionTo = directionFrom.GetOppositeDirection();
+		}
+
+		ChangeTexture();
     }
+
+	private void ChangeTexture()
+	{
+		var key = $"{DirectionFrom}_{DirectionTo}";
+		var texure = BuildingConstants.BeltTexture[key];
+		buildingSprite.Texture = texure;
+	}
 }

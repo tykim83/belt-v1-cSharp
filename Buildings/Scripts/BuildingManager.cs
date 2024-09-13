@@ -24,9 +24,16 @@ public partial class BuildingManager : Node2D
     {
         if (isPlacing && Input.IsActionJustPressed("rotate"))
         {
-			//TODO: Check If Corner is needed for Belt
+			var adjacentBuildings = GetAdjacentBuildings();
+			var needsCorner = false;
+			if (currentBuildingType == BuildingType.Belt && adjacentBuildings.ContainsKey(currentBuilding.DirectionFrom))
+			{
+				var buildingFrom = adjacentBuildings[currentBuilding.DirectionFrom];
+				if (currentBuilding.DirectionFrom == buildingFrom.DirectionTo.GetOppositeDirection())
+					needsCorner = true;
+			}
 
-			currentBuilding.RotateBuilding(false);
+			currentBuilding.RotateBuilding(needsCorner);
         }
 		else if (isPlacing && Input.IsActionJustPressed("click"))
 		{
@@ -53,6 +60,7 @@ public partial class BuildingManager : Node2D
 	public void AddConnections()
 	{
 		var adjacentBuildings = GetAdjacentBuildings();
+		var directions = new[] { Direction.Left, Direction.Right, Direction.Up, Direction.Down };
 
 		switch (currentBuildingType)
 		{
@@ -77,7 +85,7 @@ public partial class BuildingManager : Node2D
 
 			// Receive from multiple directions
 			case BuildingType.Storage:
-				foreach (var direction in new Direction[] { Direction.Left, Direction.Right, Direction.Up, Direction.Down })
+				foreach (var direction in directions)
 				{
 					if (adjacentBuildings.ContainsKey(direction))
 					{
@@ -85,6 +93,47 @@ public partial class BuildingManager : Node2D
 
 						// Check if the adjacent building is directing towards the Storage
 						if (adjacentBuilding.DirectionTo == direction.GetOppositeDirection())
+							adjacentBuilding.SetNext(currentBuilding);
+					}
+				}
+				break;
+				
+			case BuildingType.Belt:
+				foreach (var direction in directions)
+				{
+					if (adjacentBuildings.ContainsKey(direction))
+					{
+						var adjacentBuilding = adjacentBuildings[direction];
+
+						// Check if the adjacent building is going to the same direction
+						if (currentBuilding.DirectionTo == direction &&
+							adjacentBuilding.DirectionFrom == direction.GetOppositeDirection())
+						{
+							currentBuilding.SetNext(adjacentBuilding);
+						}
+						// Check if the adjacent building is accepting from all directions
+						else if (currentBuilding.DirectionTo == direction &&
+								adjacentBuilding.DirectionFrom == Direction.All)
+						{
+							currentBuilding.SetNext(adjacentBuilding);
+						}
+						// Check if the adjacent building is sending items to the current building
+						else if (adjacentBuilding.DirectionTo == direction.GetOppositeDirection() &&
+								currentBuilding.DirectionFrom == direction)
+						{
+							adjacentBuilding.SetNext(currentBuilding);
+						}
+						// Check If I can push an item to the belt from the side
+						else if (adjacentBuilding.BuildingType == BuildingType.Belt &&
+								currentBuilding.DirectionTo == direction &&
+								currentBuilding.DirectionTo != adjacentBuilding.DirectionTo.GetOppositeDirection())
+						{
+							currentBuilding.SetNext(adjacentBuilding);
+						}
+						// Check if there is a Belt who can push an item from the side
+						else if (adjacentBuilding.BuildingType == BuildingType.Belt &&
+								currentBuilding.DirectionTo == direction &&
+								currentBuilding.DirectionTo != adjacentBuilding.DirectionTo.GetOppositeDirection())
 						{
 							adjacentBuilding.SetNext(currentBuilding);
 						}
