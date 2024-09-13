@@ -3,25 +3,30 @@ using Beltv1C.Items.Constants;
 using Beltv1C.Items.Enums;
 using Beltv1C.Items.Scripts;
 using Godot;
-using System;
 
 namespace Beltv1C.Buildings.Scripts;
 
 public partial class Generator : BaseBuilding
 {
     private Timer timer;
+    private ItemType itemType;
 
     public override void _Ready()
     {
 		itemType = ItemType.Wood;
-        directionFrom = Direction.Right;
-        directionTo = Direction.None;
+        directionFrom = Direction.None;
+        directionTo = Direction.Right;
+        buildingType = BuildingType.Generator;
 
         // Get the references to the nodes in the scene
         item = GetNode<Node2D>("Item");
         buildingSprite = GetNode<Sprite2D>("BuildingSprite");
         buildingArrow = GetNode<Sprite2D>("BuildingArrow");
 		timer = GetNode<Timer>("Timer");
+
+        Color currentColor = buildingSprite.Modulate;
+        currentColor.A = 0.5f; 
+        buildingSprite.Modulate = currentColor;
 
 		timer.Timeout += OnTimerTimeout;
 
@@ -39,31 +44,31 @@ public partial class Generator : BaseBuilding
             GD.PrintErr("Arrow node not found!");
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+	public override void RotateBuilding(bool needsCorner) 
+    {
+        buildingSprite.RotationDegrees += 90;
+        directionTo = directionTo.RotateClockwise();
+    }
 
     public override void Create()
     {
         timer.Start();
+        base.Create();
     }
 
-    public override void SetNext(Node2D receivedNext)
+    public override void MoveBoxToNext(double delta)
     {
-        throw new NotImplementedException();
+        if (timer.IsStopped())
+            timer.Start();
+            
+        base.MoveBoxToNext(delta);
     }
 
-    public override void MoveBoxToNext(float delta)
-    {
-        throw new NotImplementedException();
-    }
-
-	private void OnTimerTimeout()
+    private void OnTimerTimeout()
     {
         timer.Stop();
 
-        BaseItem inputItem = (BaseItem)ItemConstants.BaseItemScene.Instantiate();
+        inputItem = (BaseItem)ItemConstants.BaseItemScene.Instantiate();
 
         // Set the position relative to the item node
         inputItem.GlobalPosition = Position - item.GlobalPosition;
@@ -73,5 +78,7 @@ public partial class Generator : BaseBuilding
 
         // Add the inputItem to the item node
         item.AddChild(inputItem);
+
+        hasArrived = true;
     }
 }
