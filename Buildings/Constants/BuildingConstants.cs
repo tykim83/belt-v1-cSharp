@@ -10,6 +10,7 @@ public static class BuildingConstants
     {
         { BuildingType.Generator, GD.Load<PackedScene>("res://Buildings/Scenes/generator.tscn") },
 		{ BuildingType.Storage, GD.Load<PackedScene>("res://Buildings/Scenes/storage.tscn") },
+		{ BuildingType.Belt, GD.Load<PackedScene>("res://Buildings/Scenes/belt.tscn") },
     };
 
 	public const double MOVEMENT_SPEED = 64.0;

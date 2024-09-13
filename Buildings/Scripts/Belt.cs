@@ -1,17 +1,19 @@
 using Beltv1C.Buildings.Enums;
+using Beltv1C.Items.Enums;
 using Godot;
 
 namespace Beltv1C.Buildings.Scripts;
 
-public partial class Storage : BaseBuilding
+public partial class Belt : BaseBuilding
 {
-    private int itemCount = 0;
+    private ItemType itemType;
 
-	public override void _Ready()
+    public override void _Ready()
     {
-        directionFrom = Direction.All;
-        directionTo = Direction.None;
-		buildingType = BuildingType.Storage;
+		itemType = ItemType.Wood;
+        directionFrom = Direction.Left;
+        directionTo = Direction.Right;
+        buildingType = BuildingType.Belt;
 
         // Get the references to the nodes in the scene
         item = GetNode<Node2D>("Item");
@@ -21,7 +23,6 @@ public partial class Storage : BaseBuilding
         Color currentColor = buildingSprite.Modulate;
         currentColor.A = 0.5f; 
         buildingSprite.Modulate = currentColor;
-
 
         // Optional: Add error checking to make sure nodes were found
         if (item == null)
@@ -37,18 +38,6 @@ public partial class Storage : BaseBuilding
 	public override void RotateBuilding(bool needsCorner) 
     {
         buildingSprite.RotationDegrees += 90;
-		directionFrom = directionFrom.RotateClockwise();
         directionTo = directionTo.RotateClockwise();
-    }
-
-    public override void ItemReceived()
-    {
-        GD.Print(inputItem.ItemType + " received!");
-        inputItem.QueueFree();
-        inputItem = null;
-        itemCount++;
-
-        GD.Print("Item received! Total items: " + itemCount);
-        base.ItemReceived();
     }
 }
