@@ -11,6 +11,7 @@ public static class BuildingConstants
         { BuildingType.Generator, GD.Load<PackedScene>("res://Buildings/Scenes/generator.tscn") },
 		{ BuildingType.Storage, GD.Load<PackedScene>("res://Buildings/Scenes/storage.tscn") },
 		{ BuildingType.Belt, GD.Load<PackedScene>("res://Buildings/Scenes/belt.tscn") },
+		{ BuildingType.Factory, GD.Load<PackedScene>("res://Buildings/Scenes/factory.tscn") }
     };
 
 	public static readonly Dictionary<string, Texture2D> BeltTexture = new()

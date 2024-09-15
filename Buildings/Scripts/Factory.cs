@@ -1,3 +1,4 @@
+
 using Beltv1C.Buildings.Enums;
 using Beltv1C.Items.Constants;
 using Beltv1C.Items.Enums;
@@ -6,22 +7,22 @@ using Godot;
 
 namespace Beltv1C.Buildings.Scripts;
 
-public partial class Generator : BaseBuilding
+public partial class Factory : BaseBuilding
 {
-    private Timer timer;
+	private Timer timer;
 
     public override void _Ready()
     {
-        directionFrom = Direction.None;
+        directionFrom = Direction.Left;
         directionTo = Direction.Right;
-        buildingType = BuildingType.Generator;
+        buildingType = BuildingType.Factory;
 
         // Get the references to the nodes in the scene
         item = GetNode<Node2D>("Item");
         buildingSprite = GetNode<Sprite2D>("BuildingSprite");
         buildingArrow = GetNode<Sprite2D>("BuildingArrow");
 		timer = GetNode<Timer>("Timer");
-        timer.Timeout += OnTimerTimeout;
+		timer.Timeout += OnTimerTimeout;
 
         Color currentColor = buildingSprite.Modulate;
         currentColor.A = 0.5f; 
@@ -30,7 +31,7 @@ public partial class Generator : BaseBuilding
         // Optional: Add error checking to make sure nodes were found
         if (item == null)
             GD.PrintErr("Item node not found!");
-
+		
         if (timer == null)
             GD.PrintErr("Timer node not found!");
 
@@ -43,27 +44,22 @@ public partial class Generator : BaseBuilding
 
 	public override void RotateBuilding(bool needsCorner) 
     {
-        buildingSprite.RotationDegrees += 90;
-        directionTo = directionTo.RotateClockwise();
+		buildingSprite.RotationDegrees += 90;
+        directionFrom = directionFrom.RotateClockwise();
+		directionTo = directionFrom.GetOppositeDirection();
     }
 
-    public override void Create()
+	public override void ItemReceived() 
     {
-        timer.Start();
-        base.Create();
+        inputItem.QueueFree();
+		timer.Start();
     }
 
-    public override void MoveBoxToNext(double delta)
-    {
-        if (timer.IsStopped())
-            timer.Start();
-
-        base.MoveBoxToNext(delta);
-    }
-
-    private void OnTimerTimeout()
+	private void OnTimerTimeout()
     {
         timer.Stop();
+
+		hasArrived = true;
 
         inputItem = (BaseItem)ItemConstants.BaseItemScene.Instantiate();
 
@@ -71,7 +67,7 @@ public partial class Generator : BaseBuilding
         inputItem.GlobalPosition = Position - item.GlobalPosition;
 
         // Set the ItemType (e.g., to Wood)
-        inputItem.Create(ItemType.Wood);
+        inputItem.Create(ItemType.Planks);
 
         // Add the inputItem to the item node
         item.AddChild(inputItem);
