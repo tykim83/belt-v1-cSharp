@@ -1,13 +1,15 @@
+using System;
+
 namespace Beltv1C.Buildings.Enums;
 
+[Flags]
 public enum Direction
 {
-	Right = 0,
-	Down = 1,
-	Left = 2,
-	Up = 3,
-	None = 4,
-	All = 5
+    None = 0,
+	Right = 1 << 0,
+	Down = 1 << 1,
+	Left = 1 << 2,
+	Up = 1 << 3,
 }
 
 public static class DirectionExtensions

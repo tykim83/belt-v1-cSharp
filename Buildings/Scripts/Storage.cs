@@ -9,7 +9,7 @@ public partial class Storage : BaseBuilding
 
 	public override void _Ready()
     {
-        directionFrom = Direction.All;
+        directionFrom = Direction.Right | Direction.Left | Direction.Up | Direction.Down;
         directionTo = Direction.None;
 		buildingType = BuildingType.Storage;
 

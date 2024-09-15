@@ -70,7 +70,7 @@ public partial class BuildingManager : Node2D
 				{
 					var buildingTo = adjacentBuildings[currentBuilding.DirectionTo];
 
-					if (buildingTo.DirectionFrom == currentBuilding.DirectionTo.GetOppositeDirection() || buildingTo.DirectionFrom == Direction.All)
+					if (buildingTo.DirectionFrom.HasFlag(currentBuilding.DirectionTo.GetOppositeDirection()))
 						currentBuilding.SetNext(adjacentBuildings[currentBuilding.DirectionTo]);
 				}
 				break;
@@ -83,8 +83,9 @@ public partial class BuildingManager : Node2D
 					{
 						var adjacentBuilding = adjacentBuildings[direction];
 
+
 						// Check if the adjacent building is directing towards the Storage
-						if (adjacentBuilding.DirectionTo == direction.GetOppositeDirection())
+						if (adjacentBuilding.DirectionTo.HasFlag(direction.GetOppositeDirection()))
 							adjacentBuilding.SetNext(currentBuilding);
 					}
 				}
@@ -98,37 +99,12 @@ public partial class BuildingManager : Node2D
 						var adjacentBuilding = adjacentBuildings[direction];
 
 						// Check if the adjacent building is going to the same direction
-						if (currentBuilding.DirectionTo == direction &&
-							adjacentBuilding.DirectionFrom == direction.GetOppositeDirection())
-						{
+						if (currentBuilding.DirectionTo.HasFlag(direction) && adjacentBuilding.DirectionFrom.HasFlag(direction.GetOppositeDirection()))
 							currentBuilding.SetNext(adjacentBuilding);
-						}
-						// Check if the adjacent building is accepting from all directions
-						else if (currentBuilding.DirectionTo == direction &&
-								adjacentBuilding.DirectionFrom == Direction.All)
-						{
-							currentBuilding.SetNext(adjacentBuilding);
-						}
+
 						// Check if the adjacent building is sending items to the current building
-						else if (adjacentBuilding.DirectionTo == direction.GetOppositeDirection() &&
-								currentBuilding.DirectionFrom == direction)
-						{
+						else if (adjacentBuilding.DirectionTo.HasFlag(direction.GetOppositeDirection()) && currentBuilding.DirectionFrom.HasFlag(direction))
 							adjacentBuilding.SetNext(currentBuilding);
-						}
-						// Check If I can push an item to the belt from the side
-						else if (adjacentBuilding.BuildingType == BuildingType.Belt &&
-								currentBuilding.DirectionTo == direction &&
-								currentBuilding.DirectionTo != adjacentBuilding.DirectionTo.GetOppositeDirection())
-						{
-							currentBuilding.SetNext(adjacentBuilding);
-						}
-						// Check if there is a Belt who can push an item from the side
-						else if (adjacentBuilding.BuildingType == BuildingType.Belt &&
-								currentBuilding.DirectionTo == direction &&
-								currentBuilding.DirectionTo != adjacentBuilding.DirectionTo.GetOppositeDirection())
-						{
-							adjacentBuilding.SetNext(currentBuilding);
-						}
 					}
 				}
 				break;
